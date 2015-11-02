@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:sws="http://www.springframework.org/schema/web-services"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/web-services
+       http://www.springframework.org/schema/web-services/web-services.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<import
+		resource="classpath:/META-INF/spring/integration/inbound-gateway-config.xml" />
+
+	<sws:dynamic-wsdl id="echoService" portTypeName="ws-inbound-gateway"
+		locationUri="/echoService" targetNamespace="http://manish.niyati.com/echo">
+		<sws:xsd location="/WEB-INF/echo.xsd" />
+	</sws:dynamic-wsdl>
+
+	<!-- Ensures that all incoming requests will be routed to the ws:inbound-gateway -->
+	<bean
+		class="org.springframework.ws.server.endpoint.mapping.UriEndpointMapping">
+		<property name="defaultEndpoint" ref="ws-inbound-gateway" />
+		
+	</bean>
+	
+	
+</beans>
